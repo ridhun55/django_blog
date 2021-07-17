@@ -1,17 +1,27 @@
 {% extends 'base.html' %}
-{% block title %} Edit Profile {% endblock %}
+{% block title %} Edit Settings {% endblock %}
 
 {% block content %}
 
-<h1>Edit Profile</h1>
-<div class="form-group">
-   <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button class="btn btn-success">Update Profile</button>
-   </form>
-</div>
+{% if user.is_authenticated %}
 
-<br/>
+   <h1>Edit Settings</h1>
+   <br/>
+   <br/>
+   {{ user.profile.bio }}
+
+   <div class="form-group">
+      <form method="POST">
+         {% csrf_token %}
+         {{ form.as_p }}
+         <button class="btn btn-success">Update Profile</button>
+      </form>
+   </div>
+
+   <br/>
+
+{% else %}
+   <h2>please login First .. </h2>
+{% endif %}
 
 {% endblock %}

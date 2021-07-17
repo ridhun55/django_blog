@@ -1,27 +1,29 @@
 {% extends 'base.html' %}
-{% block title %} Edit Blog Post {% endblock %}
+{% block title %} Edit Profile Page {% endblock %}
 
 {% block content %}
-
 {% if user.is_authenticated %}
-   {% if user.id == post.author.id %}
-      <h1>Update Post</h1>
+
+   {% if user.id == profile.user.id %}
+
+      <h1>Edit Profile Page</h1>
       <div class="form-group">
          <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.media }}
             {{ form.as_p }}
-            <button class="btn btn-success">Update</button>
+            <button class="btn btn-success">Update Profile Page</button>
          </form>
       </div>
+
    {% else %}
-      <h3>You are not allowed here !! please login</h3>
+      <h2>you arw not the correct User to edit this Page ...</h2>
    {% endif %}
 
 {% else %}
-
-<h2>you cannot update. please login..</h2>
-
+   <h2>you're not allowed here!!.. </h2>
 {% endif %}
+
+<br/>
 
 {% endblock %}

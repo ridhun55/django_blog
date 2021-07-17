@@ -1,8 +1,8 @@
 from django.urls.base import reverse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Category, Post
-from .forms import PostForm, EditForm
+from .models import Category, Post, Comment
+from .forms import PostForm, EditForm, CommentForm
 from django.urls import reverse_lazy,reverse
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, request
@@ -52,6 +52,7 @@ class ArticleDetailView(DetailView):
       cat_menu = Category.objects.all()
       context = super(ArticleDetailView, self).get_context_data(*args, **kwargs)
       
+      
       stuff = get_object_or_404(Post, id=self.kwargs['pk'])
       total_likes = stuff.total_likes()
       
@@ -71,6 +72,16 @@ class AddPostView(CreateView):
    template_name = 'add_post.html'
    # fields = '__all__'
    # fields = ('title', 'body')
+
+
+class AddCommentView(CreateView):
+   model = Comment
+   form_class = CommentForm
+   template_name = 'add_comment.html'
+   def form_valid(self, form):
+      form.instance.post_id = self.kwargs['pk']
+      return super().form_valid(form)
+   success_url = reverse_lazy('home')
    
 
 class AddCategoryView(CreateView):
