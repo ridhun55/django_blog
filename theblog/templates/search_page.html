@@ -15,8 +15,21 @@
       {% endfor %}
 
       {% if not search_post %}
-         <small>No Result found...please try another keyword </small>
+         {% for search in search_category %}
+            <a href="{% url 'article-detail' search.pk %}">
+            {{ search.title }}</a> <br> 
+            <small>Category : <a href="{% url 'category' search.category|slugify %}">{{ search.category }}</a></small>
+            <br/><hr/>
+         {% endfor %}
+         
       {% endif %}
+
+      {% if not search_post %}
+         {% if not search_category %}
+            <small>No Result found...please try another keyword </small>
+         {% endif %}
+      {% endif %}
+   
    
    {% else %}
       <h1>hey! You forgot to search for a BLOG...</h1>

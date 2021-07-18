@@ -109,7 +109,8 @@ def SearchPageView(request):
    if request.method == 'POST':
       searched = request.POST['searched']
       search_post = Post.objects.filter(title__contains=searched)
+      search_category = Post.objects.filter(category__contains=searched)
       
-      return render(request, 'search_page.html', {'searched':searched, 'search_post':search_post})
+      return render(request, 'search_page.html', {'searched':searched, 'search_post':search_post, 'search_category':search_category})
    else:    
       return render(request, 'search_page.html', {})    
