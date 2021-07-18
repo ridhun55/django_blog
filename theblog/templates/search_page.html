@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %} Search Blog {% endblock %}
+
+{% block content %}
+
+<center>
+   {% if searched %}
+      <h1>You Searched For {{ searched }}</h1><br/>
+
+      {% for search in search_post %}
+         <a href="{% url 'article-detail' search.pk %}">
+         {{ search.title }}</a> <br> 
+         <small>Category : <a href="{% url 'category' search.category|slugify %}">{{ search.category }}</a></small>
+         <br/><hr/>
+      {% endfor %}
+
+      {% if not search_post %}
+         <small>No Result found...please try another keyword </small>
+      {% endif %}
+   
+   {% else %}
+      <h1>hey! You forgot to search for a BLOG...</h1>
+   {% endif %}
+</center>
+
+
+{% endblock %}
